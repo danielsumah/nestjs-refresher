@@ -1,5 +1,5 @@
 export interface Recipe {
-  id: number;
+  id: number | null;
   meal: string;
   duration: string;
   country: string;

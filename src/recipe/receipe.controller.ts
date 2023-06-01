@@ -5,6 +5,11 @@ import { RecipeService } from './recipe.service';
 @Controller('recipes')
 export class RecipeController {
   constructor(private recipeService: RecipeService) {}
+  @Post('create')
+  createRecipe(@Body() recipeDto: Recipe) {
+    return this.recipeService.createRecipe(recipeDto);
+  }
+
   @Get()
   getRecipes(): Recipe[] {
     return this.recipeService.getRecipes();
@@ -15,18 +20,13 @@ export class RecipeController {
     return this.recipeService.getRecipe(id);
   }
 
-  @Post('create')
-  createRecipe(@Body() recipeDto: Recipe) {
-    return this.recipeService.createRecipe(recipeDto);
-  }
-
   @Post('update/:id')
   updateRecipe(@Body() recipeDto: Recipe, @Param('id') id: number): Recipe {
     return this.recipeService.updateRecipe(recipeDto, id);
   }
 
-  @Delete('delete')
+  @Delete('delete/:id')
   deleteRecipe(@Param('id') id: number): object {
-    return { message: `recipe ${id} deleted` };
+    return this.recipeService.deleteRecipe(id);
   }
 }
